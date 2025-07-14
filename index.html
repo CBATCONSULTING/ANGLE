@@ -5,18 +5,78 @@
     <title>Calculateur d'angle</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; }
-        h2 { text-align: center; }
-        body { font-family: Arial, sans-serif; padding: 2em; background: #f4f7fa; }
-        .container { max-width: 480px; margin: auto; background: white; padding: 2em; border-radius: 1em; box-shadow: 0 2px 10px #0001; }
-        label { display: block; margin-top: 1em; }
-        input { width: 100%; padding: 0.6em; margin-top: 0.3em; border: 1px solid #ccc; border-radius: 0.5em; font-size: 1em; }
-        button { margin-top: 1.5em; padding: 0.8em 1.5em; background: #1976d2; color: white; border: none; border-radius: 0.5em; font-size: 1.1em; cursor: pointer; }
-        button:hover { background: #1458a3; }
-        .result { margin-top: 2em; font-size: 1.1em; background: #e3f2fd; padding: 1em; border-radius: 0.5em; }
-        .instructions { background: #fff9e0; border-left: 5px solid #f7b733; padding: 1em; margin-bottom: 2em; border-radius: 0.7em;}
-        .schema-explication { text-align: center; margin-bottom: 1em; }
-        .schema-explication img { border: 1px solid #ccc; border-radius: 8px; background: #fff; max-width: 100%; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2em;
+            background: #f4f7fa;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: auto;
+            background: white;
+            padding: 2em;
+            border-radius: 1em;
+            box-shadow: 0 2px 10px #0001;
+        }
+
+        label {
+            display: block;
+            margin-top: 1em;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.6em;
+            margin-top: 0.3em;
+            border: 1px solid #ccc;
+            border-radius: 0.5em;
+            font-size: 1em;
+        }
+
+        button {
+            margin-top: 1.5em;
+            padding: 0.8em 1.5em;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 0.5em;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background: #1458a3;
+            }
+
+        .result {
+            margin-top: 2em;
+            font-size: 1.1em;
+            background: #e3f2fd;
+            padding: 1em;
+            border-radius: 0.5em;
+        }
+
+        .instructions {
+            background: #fff9e0;
+            border-left: 5px solid #f7b733;
+            padding: 1em;
+            margin-bottom: 2em;
+            border-radius: 0.7em;
+        }
+
+        .schema-explication {
+            text-align: center;
+            margin-bottom: 1em;
+        }
+
+            .schema-explication img {
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                background: #fff;
+                max-width: 100%;
+            }
+
         .canvas-wrapper {
             width: 100%;
             max-width: 400px;
@@ -27,184 +87,186 @@
             border-radius: 0.5em;
             position: relative;
         }
+
         canvas {
             width: 100%;
             height: 100%;
             display: block;
         }
+
+        h2 {
+            text-align: center;
+        }
+
         @media (max-width: 600px) {
-            body { padding: 0.3em; }
-            .container { padding: 1em; }
-            input, button { font-size: 1em; }
-            .canvas-wrapper { max-width: 100vw; }
+            body {
+                padding: 0.3em;
+            }
+
+            .container {
+                padding: 1em;
+            }
+
+            input, button {
+                font-size: 1em;
+            }
+
+            .canvas-wrapper {
+                max-width: 100vw;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2>Calculateur d'angle</h2>
-    <div class="instructions">
-        <b>Procédure :</b>
-        <ol>
-            <li>Placez le télémètre au point <b>A</b>.</li>
-            <li>Mesurez la longueur <b>AB</b> puis la longueur <b>AC</b>.</li>
-            <li>
-                Placez le télémètre au point <b>C</b>.<br>
-                Mesurez la longueur <b>CB</b>.
-            </li>
-        </ol>
-        <div class="schema-explication">
-            <img src="https://static.wixstatic.com/media/9c09bd_1d85b931eee747119e1a9ff4a11e0629~mv2.png" alt="Explications mesures triangle">
+    <div class="container">
+        <h2>Calculateur d'angle</h2>
+        <div class="instructions">
+            <b>Procédure :</b>
+            <ol>
+                <li>Placez le télémètre au point <b>A</b></li>
+                <li>Mesurez la longueur <b>AB</b></li>
+                <li>Puis la longueur <b>AC</b></li>
+                <li>Placez le télémètre au point <b>C</b></li>
+                <li>Mesurez la longueur <b>CB</b></li>
+            </ol>
+            <div class="schema-explication">
+                <img src="https://static.wixstatic.com/media/9c09bd_1d85b931eee747119e1a9ff4a11e0629~mv2.png" alt="Explications mesures triangle">
+            </div>
+            <div>Entrez les 3 mesures ci-dessous pour obtenir l’angle en <b>B</b>.</div>
         </div>
-        <div>Entrez les 3 mesures ci-dessous pour obtenir l’angle en <b>B</b>.</div>
+        <form id="triangleForm">
+            <label>
+                Longueur AB <b>(en cm)</b> :
+                <input type="number" step="any" min="0" id="ab" required>
+            </label>
+            <label>
+                Longueur AC <b>(en cm)</b> :
+                <input type="number" step="any" min="0" id="ac" required>
+            </label>
+            <label>
+                Longueur CB <b>(en cm)</b> :
+                <input type="number" step="any" min="0" id="cb" required>
+            </label>
+            <button type="submit">Calculer l'angle en B</button>
+        </form>
+        <div class="canvas-wrapper">
+            <canvas id="triangleCanvas"></canvas>
+        </div>
+        <div class="result" id="result"></div>
     </div>
-    <form id="triangleForm">
-        <label>
-            Longueur AB <b>(en cm)</b> :
-            <input type="number" step="any" min="0" id="ab" required>
-        </label>
-        <label>
-            Longueur AC <b>(en cm)</b> :
-            <input type="number" step="any" min="0" id="ac" required>
-        </label>
-        <label>
-            Longueur CB <b>(en cm)</b> :
-            <input type="number" step="any" min="0" id="cb" required>
-        </label>
-        <button type="submit">Calculer l'angle en B</button>
-    </form>
-    <div class="canvas-wrapper">
-        <canvas id="triangleCanvas"></canvas>
-    </div>
-    <div class="result" id="result"></div>
-</div>
-<script>
-function drawTriangleResponsive(ab, ac, cb, angleB) {
-    const canvas = document.getElementById('triangleCanvas');
-    // Responsive: adapte la taille du canvas à son conteneur
-    const wrapper = canvas.parentElement;
-    const width = wrapper.offsetWidth;
-    const height = wrapper.offsetHeight;
-    canvas.width = width;
-    canvas.height = height;
+    <script>
+        function drawTriangleResponsive(ab, ac, cb, angleB) {
+            const canvas = document.getElementById('triangleCanvas');
+            const wrapper = canvas.parentElement;
+            const width = wrapper.offsetWidth;
+            const height = wrapper.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, width, height);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, width, height);
 
-    // --- Triangle math : B(0,0), A(ab,0), C(xC,yC ou -yC)
-    const a = cb, b = ac, c = ab;
-    const xA = c, yA = 0;
-    const xB = 0, yB = 0;
-    const xC = (c*c + a*a - b*b) / (2*c);
-    let yC = Math.sqrt(Math.max(0, a*a - xC*xC));
+            // --- Triangle math : B(0,0), A(ab,0), C(xC,yC ou -yC)
+            const a = cb, b = ac, c = ab;
+            const xA = c, yA = 0;
+            const xB = 0, yB = 0;
+            const xC = (c * c + a * a - b * b) / (2 * c);
+            let yC = Math.sqrt(Math.max(0, a * a - xC * xC));
 
-    // Deux solutions pour C
-    let tri1 = [[xB, yB], [xA, yA], [xC,  yC]];
-    let tri2 = [[xB, yB], [xA, yA], [xC, -yC]];
+            let tri1 = [[xB, yB], [xA, yA], [xC, yC]];
+            let tri2 = [[xB, yB], [xA, yA], [xC, -yC]];
 
-    // On veut la version où C est à droite de AB (donc la plus grande abscisse après rotation)
-    const angle_ab = Math.PI / 4.5; // ≈ 40°
-    function rotate([x, y], theta) {
-        return [
-            x * Math.cos(theta) - y * Math.sin(theta),
-            x * Math.sin(theta) + y * Math.cos(theta)
-        ];
-    }
+            const angle_ab = Math.PI / 4.5; // ≈ 40°
+            function rotate([x, y], theta) {
+                return [
+                    x * Math.cos(theta) - y * Math.sin(theta),
+                    x * Math.sin(theta) + y * Math.cos(theta)
+                ];
+            }
 
-    let rot1 = tri1.map(pt => rotate(pt, angle_ab));
-    let rot2 = tri2.map(pt => rotate(pt, angle_ab));
+            let rot1 = tri1.map(pt => rotate(pt, angle_ab));
+            let rot2 = tri2.map(pt => rotate(pt, angle_ab));
 
-    // On garde la solution où C est le plus à droite de AB
-    let pts = (rot1[2][0] > rot2[2][0]) ? rot1 : rot2;
+            let pts = (rot1[2][0] > rot2[2][0]) ? rot1 : rot2;
 
-    // -- Bounding box (pour scaling & centrage) --
-    let xs = pts.map(pt => pt[0]), ys = pts.map(pt => pt[1]);
-    let minX = Math.min(...xs), maxX = Math.max(...xs);
-    let minY = Math.min(...ys), maxY = Math.max(...ys);
+            let xs = pts.map(pt => pt[0]), ys = pts.map(pt => pt[1]);
+            let minX = Math.min(...xs), maxX = Math.max(...xs);
+            let minY = Math.min(...ys), maxY = Math.max(...ys);
 
-    // --- Calcul du scale pour tout faire tenir avec des marges ---
-    const margin = Math.min(width, height) * 0.09; // margin responsive
-    const scale = Math.min((width - 2*margin)/(maxX-minX), (height - 2*margin)/(maxY-minY));
+            const margin = Math.min(width, height) * 0.09;
+            const scale = Math.min((width - 2 * margin) / (maxX - minX), (height - 2 * margin) / (maxY - minY));
 
-    // --- Appliquer scale & centrer dans le canvas ---
-    let offsetX = (width - (maxX-minX)*scale)/2 - minX*scale;
-    let offsetY = (height - (maxY-minY)*scale)/2 - minY*scale;
+            let offsetX = (width - (maxX - minX) * scale) / 2 - minX * scale;
+            let offsetY = (height - (maxY - minY) * scale) / 2 - minY * scale;
 
-    let [B, A, C] = pts.map(([x, y]) => [x * scale + offsetX, y * scale + offsetY]);
+            let [B, A, C] = pts.map(([x, y]) => [x * scale + offsetX, y * scale + offsetY]);
 
-    // --- Dessin du triangle ---
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#1976d2";
-    ctx.beginPath();
-    ctx.moveTo(B[0], B[1]);
-    ctx.lineTo(A[0], A[1]);
-    ctx.lineTo(C[0], C[1]);
-    ctx.lineTo(B[0], B[1]);
-    ctx.stroke();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#1976d2";
+            ctx.beginPath();
+            ctx.moveTo(B[0], B[1]);
+            ctx.lineTo(A[0], A[1]);
+            ctx.lineTo(C[0], C[1]);
+            ctx.lineTo(B[0], B[1]);
+            ctx.stroke();
 
-    // --- Points et labels ---
-    function drawPoint([x, y], label) {
-        ctx.beginPath();
-        ctx.arc(x, y, 6, 0, 2 * Math.PI);
-        ctx.fillStyle = "#1976d2";
-        ctx.fill();
-        ctx.font = "bold 16px Arial";
-        ctx.fillStyle = "#228B22";
-        ctx.fillText(label, x - 18, y - 12);
-    }
-    drawPoint(A, "A");
-    drawPoint(B, "B");
-    drawPoint(C, "C");
+            function drawPoint([x, y], label) {
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, 2 * Math.PI);
+                ctx.fillStyle = "#1976d2";
+                ctx.fill();
+                ctx.font = "bold 16px Arial";
+                ctx.fillStyle = "#228B22";
+                ctx.fillText(label, x - 18, y - 12);
+            }
+            drawPoint(A, "A");
+            drawPoint(B, "B");
+            drawPoint(C, "C");
 
-    // --- Longueurs sur les côtés ---
-    ctx.font = "14px Arial";
-    ctx.fillStyle = "#444";
-    ctx.fillText(`AB: ${ab}`, (A[0]+B[0])/2 - 35, (A[1]+B[1])/2 + 10);
-    ctx.fillText(`AC: ${ac}`, (A[0]+C[0])/2, (A[1]+C[1])/2 + 20);
-    ctx.fillText(`CB: ${cb}`, (B[0]+C[0])/2 + 10, (B[1]+C[1])/2);
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "#444";
+            ctx.fillText(`AB: ${ab}`, (A[0] + B[0]) / 2 - 35, (A[1] + B[1]) / 2 + 10);
+            ctx.fillText(`AC: ${ac}`, (A[0] + C[0]) / 2, (A[1] + C[1]) / 2 + 20);
+            ctx.fillText(`CB: ${cb}`, (B[0] + C[0]) / 2 + 10, (B[1] + C[1]) / 2);
 
-    // --- Angle en B ---
-    ctx.font = "bold 15px Arial";
-    ctx.fillStyle = "#c62828";
-    ctx.fillText(`${angleB.toFixed(1)}°`, B[0] - 8, B[1] + 32);
-}
+            ctx.font = "bold 15px Arial";
+            ctx.fillStyle = "#c62828";
+            ctx.fillText(`${angleB.toFixed(1)}°`, B[0] - 8, B[1] + 32);
+        }
 
-function updateTriangle(e) {
-    if (e) e.preventDefault();
-    const ab = parseFloat(document.getElementById('ab').value);
-    const ac = parseFloat(document.getElementById('ac').value);
-    const cb = parseFloat(document.getElementById('cb').value);
+        function updateTriangle(e) {
+            if (e) e.preventDefault();
+            const ab = parseFloat(document.getElementById('ab').value);
+            const ac = parseFloat(document.getElementById('ac').value);
+            const cb = parseFloat(document.getElementById('cb').value);
 
-    const resultDiv = document.getElementById('result');
-    if (!ab || !ac || !cb) return;
+            const resultDiv = document.getElementById('result');
+            if (!ab || !ac || !cb) return;
 
-    if (ab + ac <= cb || ab + cb <= ac || ac + cb <= ab) {
-        resultDiv.innerHTML = "⚠️ Les longueurs ne forment pas un triangle valide.";
-        drawTriangleResponsive(1, 1, 1, 60); // vide
-        return;
-    }
+            if (ab + ac <= cb || ab + cb <= ac || ac + cb <= ab) {
+                resultDiv.innerHTML = "⚠️ Les longueurs ne forment pas un triangle valide.";
+                drawTriangleResponsive(1, 1, 1, 60); // vide
+                return;
+            }
 
-    function toDegrees(radian) { return radian * 180 / Math.PI; }
-    const angleB = toDegrees(Math.acos((ab**2 + cb**2 - ac**2) / (2 * ab * cb)));
+            function toDegrees(radian) { return radian * 180 / Math.PI; }
+            const angleB = toDegrees(Math.acos((ab ** 2 + cb ** 2 - ac ** 2) / (2 * ab * cb)));
 
-    resultDiv.innerHTML = `
-        <b>Résultat :</b><br>
-        • <b>Angle en B :</b> <span style="font-size:1.2em;color:#c62828">${angleB.toFixed(2)}°</span>
-        <br>
-        <i>(Voir schéma ci-dessus)</i>
-    `;
-    drawTriangleResponsive(ab, ac, cb, angleB);
-}
+            resultDiv.innerHTML = `
+            <b>Résultat :</b><br>
+            • <b>Angle en B :</b> <span style="font-size:1.2em;color:#c62828">${angleB.toFixed(2)}°</span>
+            <br>
+        `;
+            drawTriangleResponsive(ab, ac, cb, angleB);
+        }
 
-// Responsive: redraw on resize
-window.addEventListener('resize', updateTriangle);
-document.getElementById('triangleForm').addEventListener('submit', updateTriangle);
+        window.addEventListener('resize', updateTriangle);
+        document.getElementById('triangleForm').addEventListener('submit', updateTriangle);
 
-// Initialisation (exemple pour affichage immédiat)
-document.getElementById('ab').value = 225;
-document.getElementById('ac').value = 300;
-document.getElementById('cb').value = 153;
-updateTriangle();
-</script>
+        document.getElementById('ab').value = 225;
+        document.getElementById('ac').value = 300;
+        document.getElementById('cb').value = 153;
+        updateTriangle();
+    </script>
 </body>
 </html>
